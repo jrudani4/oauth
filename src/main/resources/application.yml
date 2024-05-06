@@ -1,0 +1,32 @@
+server:
+  port: 8181
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/kotlin_crud
+    username: root
+    password: Sql@4321
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+  security:
+    oauth2:
+      client:
+        registration:
+          login-client:
+            provider: spring
+            client-id: login-client
+            client-name: Spring
+            client-secret: "{noop}openid-connect"
+            client-authentication-method: client_secret_basic
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8181/login/oauth/code/login-client
+            scope: read,write,trust
+        provider:
+          spring:
+            authorization-uri: http://localhost:8181/oauth2/authorize
+            token-uri: http://localhost:8181/oauth2/token
+            jwk-set-uri: http://localhost:8181/oauth2/jwks
